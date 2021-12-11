@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
 
-export default function Cast() {
+export default function Reviews() {
   const { id } = useParams();
   const [status, setStatus] = useState("");
   const [reviews, setReviews] = useState();

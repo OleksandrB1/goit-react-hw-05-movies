@@ -13,23 +13,13 @@ function App() {
   return (
     <div>
       <AppBar />
-      <Suspense
-        fallback={
-          <Loader
-            type="Grid"
-            color="#00BFFF"
-            height={80}
-            width={80}
-            timeout={2000}
-          />
-        }
-      >
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<Search />} />
           <Route path="/movies/:id" element={<MoviePage />}>
-            <Route path="/movies/:id/cast" element={<Cast />} />
-            <Route path="/movies/:id/reviews" element={<Reviews />} />
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
         </Routes>
       </Suspense>

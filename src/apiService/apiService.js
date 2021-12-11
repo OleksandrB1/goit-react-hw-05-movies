@@ -1,12 +1,9 @@
 import axios from "axios";
 
-const key = "fcf8b037a5405f4458bbdf1c2bb8718f";
-const BASE_URL = "https://api.themoviedb.org/3/";
-
 const fetchTrends = async () => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL}trending/movie/day?api_key=${key}`
+      `https://api.themoviedb.org/3/trending/movie/day?api_key=fcf8b037a5405f4458bbdf1c2bb8718f`
     );
     const trending = data.results;
     return trending;
@@ -18,7 +15,7 @@ const fetchTrends = async () => {
 const fetchMoviesBySearch = async (searchQuery, currentPage) => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL}search/movie?api_key=${key}&query=${searchQuery}&page=${currentPage}&language=en-US`
+      `https://api.themoviedb.org/3/search/movie?api_key=fcf8b037a5405f4458bbdf1c2bb8718f&query=${searchQuery}&page=${currentPage}&language=en-US`
     );
 
     const results = data.results;
@@ -32,7 +29,7 @@ const fetchMoviesBySearch = async (searchQuery, currentPage) => {
 const fetchMovieById = async (id) => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL}movie/${id}?api_key=${key}&language=en-US`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=fcf8b037a5405f4458bbdf1c2bb8718f&language=en-US`
     );
     return data;
   } catch (error) {
@@ -43,7 +40,7 @@ const fetchMovieById = async (id) => {
 const fetchCast = async (id) => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL}movie/${id}/credits?api_key=${key}&language=en-US`
+      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=fcf8b037a5405f4458bbdf1c2bb8718f&language=en-US`
     );
 
     return data;
@@ -55,7 +52,7 @@ const fetchCast = async (id) => {
 const fetchReviews = async (id) => {
   try {
     const { data } = await axios.get(
-      `${BASE_URL}movie/${id}/reviews?api_key=${key}&language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=fcf8b037a5405f4458bbdf1c2bb8718f&language=en-US&page=1`
     );
 
     return data;
