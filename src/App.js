@@ -18,8 +18,10 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<Search />} />
           <Route path="/movies/:id" element={<MoviePage />}>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Reviews />} />
+            <Routes>
+              <Route path="/movies/:id/cast" element={<Cast />} />
+              <Route path="/movies/:id/reviews" element={<Reviews />} />
+            </Routes>
           </Route>
         </Routes>
       </Suspense>
