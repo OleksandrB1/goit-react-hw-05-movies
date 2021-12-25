@@ -1,7 +1,16 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate, NavLink, Outlet } from "react-router-dom";
+import { useState, useEffect, lazy, Suspense } from "react";
+import {
+  useParams,
+  useNavigate,
+  NavLink,
+  Outlet,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { fetchMovieById } from "../apiService/apiService";
 import Loader from "react-loader-spinner";
+const Cast = lazy(() => import("./Cast"));
+const Reviews = lazy(() => import("./Reviews"));
 
 export default function MoviePage() {
   const navigate = useNavigate();
@@ -23,56 +32,63 @@ export default function MoviePage() {
         &#8592; Go back
       </button>
       {status === "loading" && (
-        <Loader
-          type="Grid"
-          color="#00BFFF"
-          height={80}
-          width={80}
-          timeout={2000}
-        />
+        <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
       )}
 
       {status === "ok" && (
-        <div>
-          <div className="container">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-              className="poster"
-            />
-            <div className="movie">
-              <h2>{`${movie.title} (${movie.release_date})`}</h2>
-              <p>User Score: {movie.vote_average * 10}%</p>
-              <h3>Overview</h3>
-              <p>{movie.overview}</p>
+        <>
+          <div>
+            <div className="container">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                className="poster"
+              />
+              <div className="movie">
+                <h2>{`${movie.title} (${movie.release_date})`}</h2>
+                <p>User Score: {movie.vote_average * 10}%</p>
+                <h3>Overview</h3>
+                <p>{movie.overview}</p>
 
-              {movie.genres.length > 0 && <h3>Genres</h3>}
-              {movie.genres.length > 0 &&
-                movie.genres.map(({ name }) => name).join(" ")}
+                {movie.genres.length > 0 && <h3>Genres</h3>}
+                {movie.genres.length > 0 &&
+                  movie.genres.map(({ name }) => name).join(" ")}
+              </div>
             </div>
-          </div>
-          <h3>Additional information</h3>
-          <ul className="navLink">
-            <li>
-              <NavLink
-                to={`/movies/${id}/cast`}
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Cast
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={`/movies/${id}/reviews`}
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Reviews
-              </NavLink>
-            </li>
-          </ul>
+            <h3>Additional information</h3>
+            <ul className="navLink">
+              <li>
+                <NavLink
+                  to={`/movies/${id}/cast`}
+                  className={({ isActive }) => (isActive ? "active" : "link")}
+                >
+                  Cast
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={`/movies/${id}/reviews`}
+                  className={({ isActive }) => (isActive ? "active" : "link")}
+                >
+                  Reviews
+                </NavLink>
+              </li>
+            </ul>
 
-          <Outlet />
-        </div>
+            <Outlet />
+          </div>
+
+          <Suspense
+            fallback={
+              <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
+            }
+          >
+            <Routes>
+              <Route path="/cast" element={<Cast />} />
+              <Route path="/reviews" element={<Reviews />} />
+            </Routes>
+          </Suspense>
+        </>
       )}
       {status === "notFound" && <p>`Page not found :(`</p>}
     </div>

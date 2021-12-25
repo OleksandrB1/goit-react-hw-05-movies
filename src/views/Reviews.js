@@ -20,13 +20,7 @@ export default function Reviews() {
   return (
     <>
       {status === "loading" && (
-        <Loader
-          type="Grid"
-          color="#00BFFF"
-          height={80}
-          width={80}
-          timeout={2000}
-        />
+        <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
       )}
       {status === "ok" && (
         <ul>
